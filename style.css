@@ -1,0 +1,9 @@
+:root { --bg: #ffffff; --fg: #1f2328; --muted: #57606a; --link: #0969da; }
+@media (prefers-color-scheme: dark) {
+  :root { --bg: #0d1117; --fg: #e6edf3; --muted: #8d96a0; --link: #4493f8; }
+}
+body { background: var(--bg); color: var(--fg); font: 16px/1.6 system-ui, sans-serif;
+       max-width: 42rem; margin: 3rem auto; padding: 0 16px; }
+a { color: var(--link); }
+footer, .muted { color: var(--muted); font-size: 14px; }
+footer { margin-top: 3rem; }
