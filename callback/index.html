@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="referrer" content="no-referrer">
+<title>Books Reader sign-in</title>
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+<h1 id="head">Finishing sign-in…</h1>
+<p id="msg">Handing the sign-in to the helper on this computer.</p>
+<script>
+// Intuit redirects here after the user approves. Production redirect URIs must be https and
+// cannot be localhost, so this page forwards the one-time code to the local helper, which
+// holds the client secret and exchanges it. The code is useless without that secret, and the
+// helper checks `state` against the value it issued.
+(function () {
+  var HELPER = "http://127.0.0.1:8790/callback";
+  var q = new URLSearchParams(window.location.search);
+  var head = document.getElementById("head");
+  var msg = document.getElementById("msg");
+  if (q.get("error")) {
+    head.textContent = "Sign-in was not completed";
+    msg.textContent = "QuickBooks said: " + q.get("error");
+    return;
+  }
+  if (!q.get("code") || !q.get("state")) {
+    head.textContent = "Nothing to hand over";
+    msg.textContent = "This page is only used during a QuickBooks sign-in.";
+    return;
+  }
+  window.location.replace(HELPER + window.location.search);
+  setTimeout(function () {
+    head.textContent = "The helper did not answer";
+    msg.textContent = "Start the Books Reader helper on this computer, then sign in again.";
+  }, 4000);
+})();
+</script>
+</body>
+</html>
